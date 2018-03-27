@@ -10,10 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180327093453) do
+ActiveRecord::Schema.define(version: 20180327104221) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accounts", force: :cascade do |t|
+    t.string "name"
+    t.string "addr1"
+    t.string "addr2"
+    t.string "city"
+    t.string "state"
+    t.string "zip"
+    t.string "country"
+    t.string "hash_id"
+    t.jsonb "settings", default: "{}", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hash_id"], name: "index_accounts_on_hash_id"
+    t.index ["settings"], name: "index_accounts_on_settings", using: :gin
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
@@ -31,9 +47,12 @@ ActiveRecord::Schema.define(version: 20180327093453) do
     t.datetime "last_sign_in_at"
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["hash_id"], name: "index_users_on_hash_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "users", "accounts"
 end
