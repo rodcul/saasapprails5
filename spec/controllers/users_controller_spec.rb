@@ -108,28 +108,30 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe "GET #edit" do
-    user = FactoryBot.create(:user)
+    login_user
+    @user = FactoryBot.create(:user)
+    # byebug
     it "returns http success" do
-      get :edit, params: { id: user.hash_id }
+      get :edit, params: { id: @user.hash_id }
       expect(response).to have_http_status(:success)
     end
 
     it "renders :edit" do
-      get :edit, params: { id: user.hash_id }
+      get :edit, params: { id: @user.hash_id }
       expect(response).to render_template :edit
     end
   end
 
   describe "PUT #update" do
-    user = FactoryBot.create(:user)
+    @user = FactoryBot.create(:user)
     it "returns http success" do
-      put :update, params: { id: user.hash_id, user: { name: "Yay" } }
+      put :update, params: { id: @user.hash_id, user: { name: "Yay" } }
       expect(response).to redirect_to account_users_path
     end
 
     it "renders :edit on failure" do
       put :update, params: {
-        id: user.hash_id,
+        id: @user.hash_id,
         user: FactoryBot.attributes_for(:user, email: nil, role: "user")
       }
       expect(response).to render_template :edit
@@ -137,9 +139,9 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe "DELETE #destroy" do
-    user = FactoryBot.create(:user)
+    @user = FactoryBot.create(:user)
     it "returns http success" do
-      delete :destroy, params: { id: user.hash_id }
+      delete :destroy, params: { id: @user.hash_id }
       expect(response).to redirect_to account_users_path
     end
   end
