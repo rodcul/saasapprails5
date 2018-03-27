@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe AccountsController, type: :controller do
   before(:each) do
     @request.env["devise.mapping"] = Devise.mappings[:user]
-    user = User.create!(name: "John", email: "specuser@test.com", password: 'spec123')
+    user = User.create!(name: "John", email: "specuser@test.com", password: "spec123")
     user.add_role :admin
     sign_in user
   end
@@ -27,8 +27,7 @@ RSpec.describe AccountsController, type: :controller do
     end
 
     it "renders :new on failure" do
-      post :create,  params: { account: FactoryBot.attributes_for(:account,
-                                                                  name: nil) }
+      post :create,  params: { account: FactoryBot.attributes_for(:account, name: nil) }
       expect(response).to render_template :new
     end
   end

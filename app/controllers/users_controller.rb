@@ -27,7 +27,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update(user_password_params)
         bypass_sign_in(@user)
-        format.html { redirect_to my_password_path, notice: 'Password was successfully updated.' }
+        format.html { redirect_to my_password_path, notice: "Password was successfully updated." }
       else
         format.html { render :password }
       end
@@ -62,6 +62,7 @@ class UsersController < ApplicationController
                         notice: "User was successfully invited."
           end
         else
+          set_choices
           format.html { render :new }
         end
       rescue ActiveRecord::RecordNotUnique
@@ -79,6 +80,7 @@ class UsersController < ApplicationController
                       notice: "User was successfully updated."
         end
       else
+        set_choices
         format.html { render :edit }
       end
     end
