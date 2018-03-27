@@ -1,4 +1,5 @@
 class AccountsController < ApplicationController
+  
   def new
     redirect_to root_path unless current_user.account.nil?
     @account = Account.new
