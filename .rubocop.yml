@@ -70,7 +70,7 @@ Style/ClassAndModuleChildren:
 
 Style/Documentation:
   Exclude:
-    - "app/controllers/application_controller.rb"
+    - "app/controllers/**"
     - "app/helpers/**/*_helper.rb"
     - "app/mailers/**/*_mailer.rb"
     - "app/models/application_record.rb"
